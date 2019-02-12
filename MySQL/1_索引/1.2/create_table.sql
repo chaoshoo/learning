@@ -4,6 +4,7 @@ create table t_1_2 (
 	name varchar(32) not null default '',
 	age smallint not null default 10,
 	mobile varchar(11) not null default '' ,
+    data_version bigint not null default 1,
 	PRIMARY key (id) ,
 	key age_mobile (age, mobile(8)) using BTREE,
 	key mobile (mobile(8)) using BTREE,
