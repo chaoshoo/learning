@@ -83,8 +83,6 @@ commit;
 select * from t_2_1 where id = 5;
 ~~~
 
-本节实例数据库请见[文件](./2.1/create_table.sql)
-
 # 读锁与写锁
 
 ## 读锁
