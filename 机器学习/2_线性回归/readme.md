@@ -1,4 +1,4 @@
-本节示例代码请见[文件](res\demo.py)，基于tensorflow
+本节示例代码请见[文件](res/demo.py)，基于tensorflow
 
 # 线性回归的概念
 
