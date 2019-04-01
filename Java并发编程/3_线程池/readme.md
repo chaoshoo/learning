@@ -14,7 +14,7 @@
 
 # Executor框架
 
-![](res\1.png)
+![](res/1.png)
 
 ## Executor
 
