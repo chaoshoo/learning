@@ -1,5 +1,7 @@
 # 虚拟机运行时数据区
 
+![](res/1.jpg)
+
 ## 线程相关区
 
 ### 程序计数器（Program Counter Register）
