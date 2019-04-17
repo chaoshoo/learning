@@ -15,6 +15,7 @@ public class SemaphoreDemo {
         for (int i = 0; i < nThread; i++) {
             service.submit(() -> {
                 try {
+                    // 子线程尝试获取信号量，没有获取信号量的线程阻塞，等待持有信号量的其他线程释放信号量
                     semaphore.acquire();
                     System.out.println("Start run task");
                     Thread.sleep(1000);
@@ -22,6 +23,7 @@ public class SemaphoreDemo {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
+                    // 持有信号量的线程释放信号量，让其他线程可以获取
                     semaphore.release();
                 }
             });

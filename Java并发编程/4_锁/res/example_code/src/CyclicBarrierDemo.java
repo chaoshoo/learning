@@ -16,16 +16,18 @@ public class CyclicBarrierDemo {
         ExecutorService service = Executors.newFixedThreadPool(nThread);
 
         for (int i = 0; i < nThread; i++) {
-            service.submit(() ->{
+            service.submit(() -> {
                 try {
                     try {
                         System.out.println("Start run task");
                         System.out.println("Wait for barrier");
+                        // 所有的子线程都阻塞，必须等到所有的子线程都到达栅栏以后才能全部放行继续，否则都阻塞
                         cyclicBarrier.await();
                         System.out.println("Finish run task");
                     } finally {
                     }
-                } catch (Exception e){ }
+                } catch (Exception e) {
+                }
             });
         }
         service.shutdown();

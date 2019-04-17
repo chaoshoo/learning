@@ -12,13 +12,14 @@ public class FutureTaskDemo {
 
     public void task() throws Exception {
         FutureTask<Long> futureTask = new FutureTask<Long>(() -> {
-            Thread.sleep(1000);
+            Thread.sleep(5000);
             return System.nanoTime();
         });
         System.out.println("Start run task");
         ExecutorService service = Executors.newFixedThreadPool(1);
         service.submit(futureTask);
         System.out.println("Start get task result");
+        // futureTask.get()方法阻塞了主线程，必须等到子线程任务完成返回计算结果才能继续
         Long result = futureTask.get();
         System.out.println("Finish get task result: " + result);
         service.shutdown();

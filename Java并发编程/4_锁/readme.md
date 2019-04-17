@@ -31,11 +31,11 @@ sequenceDiagram
 
 1. 锁定当前对象实例
 
-  ```java
-  public synchronized void lockFunction() {
-   	// do something on racing resources
-  }
-  ```
+     ```java
+     public synchronized void lockFunction() {
+      	   // do something on racing resources
+     }
+     ```
 
 2. 锁定当前类class
 
@@ -289,11 +289,11 @@ public void readLock() {
 
 1. 锁定当前对象实例
 
-```java
-  public synchronized void lockFunction() {
-   	// do something on racing resources
-  }
-```
+   ```java
+     public synchronized void lockFunction() {
+   	   // do something on racing resources
+     }
+   ```
 
 2. 锁定当前类class
 
@@ -451,22 +451,29 @@ import java.util.concurrent.Executors;
  */
 public class CountDownLatchDemo {
 
-    public void timeTasks(int nThread) throws InterruptedException {
+    public void tasks(int nThread) throws InterruptedException {
+        // 主线程使用的Latch，需要开门一次
         final CountDownLatch startGate = new CountDownLatch(1);
+        // 子线程使用的Lathc，需要开门nThread次
         final CountDownLatch endGate = new CountDownLatch(nThread);
 
         ExecutorService service = Executors.newFixedThreadPool(nThread);
 
         for (int i = 0; i < nThread; i++) {
-            service.submit(() ->{
+            service.submit(() -> {
                 try {
-                    startGate.await();
                     try {
                         System.out.println("Start run task");
+                        // 子线程等待主线程开门才能继续往下执行，否则阻塞
+                        startGate.await();
+                        System.out.println("Finish run task");
                     } finally {
+                        // 子线程开门，必须所有子线程都countDown以后，门才会打开，主线程继续执行
                         endGate.countDown();
+                        System.out.println("Open End latch");
                     }
-                } catch (Exception e){ }
+                } catch (Exception e) {
+                }
             });
         }
 
@@ -474,15 +481,19 @@ public class CountDownLatchDemo {
 
         long start = System.nanoTime();
         System.out.println("Start tasks: " + start);
+        System.out.println("Open start latch: " + start);
+        // 主线程开门，子线程继续执行
         startGate.countDown();
+        // 主线程等待子线程开门才能往下继续，否则阻塞
         endGate.await();
         long end = System.nanoTime();
         System.out.println("End tasks: " + end);
+        service.shutdown();
     }
 
     public static void main(String[] args) throws Exception {
         CountDownLatchDemo demo = new CountDownLatchDemo();
-        demo.timeTasks(10);
+        demo.tasks(5);
     }
 }
 ```
@@ -494,6 +505,7 @@ FutureTask表示一种抽象的可生成结果的计算任务，会处于3种状
 Future.get()方法的行为取决于任务的状态。如果任务已经完成，get会立即返回结果，否则get将阻塞调用线程知道任务进入完成状态，然后返回结果或者抛出异常。FutureTask将计算的结果从计算线程传递到获取结果的线程。
 
 ```java
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 
@@ -511,10 +523,13 @@ public class FutureTaskDemo {
             return System.nanoTime();
         });
         System.out.println("Start run task");
-        Executors.newFixedThreadPool(1).submit(futureTask);
+        ExecutorService service = Executors.newFixedThreadPool(1);
+        service.submit(futureTask);
         System.out.println("Start get task result");
+        // futureTask.get()方法阻塞了主线程，必须等到子线程任务完成返回计算结果才能继续
         Long result = futureTask.get();
         System.out.println("Finish get task result: " + result);
+        service.shutdown();
     }
 
     public static void main(String[] args) throws Exception {
@@ -536,9 +551,7 @@ Semaphore内部维护了一组虚拟的许可，许可的数量可以通过构�
 Semaphore和ReentrantLock类似，获取许可有公平策略和非公平许可策略，默认情况下使用非公平策略。
 
 ```java
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.*;
 
 /**
  * @Class: SemaphoreDemo
@@ -555,6 +568,7 @@ public class SemaphoreDemo {
         for (int i = 0; i < nThread; i++) {
             service.submit(() -> {
                 try {
+                    // 子线程尝试获取信号量，没有获取信号量的线程阻塞，等待持有信号量的其他线程释放信号量
                     semaphore.acquire();
                     System.out.println("Start run task");
                     Thread.sleep(1000);
@@ -562,6 +576,7 @@ public class SemaphoreDemo {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
+                    // 持有信号量的线程释放信号量，让其他线程可以获取
                     semaphore.release();
                 }
             });
@@ -599,16 +614,18 @@ public class CyclicBarrierDemo {
         ExecutorService service = Executors.newFixedThreadPool(nThread);
 
         for (int i = 0; i < nThread; i++) {
-            service.submit(() ->{
+            service.submit(() -> {
                 try {
                     try {
                         System.out.println("Start run task");
                         System.out.println("Wait for barrier");
+                        // 所有的子线程都阻塞，必须等到所有的子线程都到达栅栏以后才能全部放行继续，否则都阻塞
                         cyclicBarrier.await();
                         System.out.println("Finish run task");
                     } finally {
                     }
-                } catch (Exception e){ }
+                } catch (Exception e) {
+                }
             });
         }
         service.shutdown();

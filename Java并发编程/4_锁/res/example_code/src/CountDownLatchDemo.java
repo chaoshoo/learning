@@ -11,23 +11,28 @@ import java.util.concurrent.Executors;
 public class CountDownLatchDemo {
 
     public void tasks(int nThread) throws InterruptedException {
+        // 主线程使用的Latch，需要开门一次
         final CountDownLatch startGate = new CountDownLatch(1);
+        // 子线程使用的Lathc，需要开门nThread次
         final CountDownLatch endGate = new CountDownLatch(nThread);
 
         ExecutorService service = Executors.newFixedThreadPool(nThread);
 
         for (int i = 0; i < nThread; i++) {
-            service.submit(() ->{
+            service.submit(() -> {
                 try {
                     try {
                         System.out.println("Start run task");
+                        // 子线程等待主线程开门才能继续往下执行，否则阻塞
                         startGate.await();
                         System.out.println("Finish run task");
                     } finally {
+                        // 子线程开门，必须所有子线程都countDown以后，门才会打开，主线程继续执行
                         endGate.countDown();
                         System.out.println("Open End latch");
                     }
-                } catch (Exception e){ }
+                } catch (Exception e) {
+                }
             });
         }
 
@@ -36,7 +41,9 @@ public class CountDownLatchDemo {
         long start = System.nanoTime();
         System.out.println("Start tasks: " + start);
         System.out.println("Open start latch: " + start);
+        // 主线程开门，子线程继续执行
         startGate.countDown();
+        // 主线程等待子线程开门才能往下继续，否则阻塞
         endGate.await();
         long end = System.nanoTime();
         System.out.println("End tasks: " + end);
