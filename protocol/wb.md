@@ -41,7 +41,9 @@ HTML5开始提供的一种浏览器与服务器进行全双工通讯的网络技
 在webscoket协议中, client利用http来建立tcp连接, 建立tcp连接之后, client与server就可以基于tcp连接来愉快的进行通信了.
 
 复习下http
+
 ![wb](./image/http.png)
+
 ![wb](./image/httpp.png)
 
 
