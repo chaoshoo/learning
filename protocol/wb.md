@@ -123,6 +123,7 @@ transaction:tx-0
 destination:/app/marco  
 content-length:20  
 
+
 {"message":"Marco!"}  
 在这个例子中，STOMP命令是send，表明会发送一些内容。紧接着是三个头信息：一个表示消息的的事务机制，一个用来表示消息要发送到哪里的目的地，另外一个则包含了负载的大小。然后，紧接着是一个空行，STOMP帧的最后是负载内容。
 
