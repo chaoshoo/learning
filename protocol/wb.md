@@ -43,6 +43,7 @@ HTML5开始提供的一种浏览器与服务器进行全双工通讯的网络技
 复习下http
 
 ![wb](./image/http.png)
+
 ![wb](./image/httpp.png)
 
 
