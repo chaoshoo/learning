@@ -53,13 +53,21 @@ WebSocket虽然是独立于HTTP的另一种协议，但建立连接时却需要�
 1GET ws://localhost:8080/handlerA HTTP/1.1
 
 2Host: localhost:8080
+
 3Connection: Upgrade
+
 4Pragma: no-cache
+
 5Cache-Control: no-cache
+
 6Upgrade: websocket
+
 7Origin: http://localhost:8080
+
 8Sec-WebSocket-Version: 13
+
 9Sec-WebSocket-Key: IbMym0RGM6WulBh40amXHw==
+
 10Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits
 
 Connection: Upgrade：表示要升级协议
