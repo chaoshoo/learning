@@ -145,22 +145,22 @@ DISCONNECT
 上面的图是spring websocket的架构图. 
 其中由以下几个角色:
 
-生产者client: 发送send命令到某个目的地址(destination)的client.
-消费者client: 订阅某个目的地址(destination), 并接收此目的地址所推送过来的消息的client.
-request channel: 一组用来接收生产者client所推送过来的消息的线程池.
-response channel: 一组用来推送消息给消费者client的线程池.
-broker: 消息队列管理者. 简单讲就是记录哪些client订阅了哪个目的地址(destination).
-应用目的地址(图中的”/app”): 发送到这类目的地址的消息在到达broker之前, 会先路由到由应用写的某个方法. 相当于对进入broker的消息进行一次拦截, 目的是针对消息做一些业务处理.
-非应用目的地址(图中的”/topic”): 发送到这类目的地址的消息会直接转到broker. 不会被应用拦截.
-SimAnnotatonMethod: 发送到应用目的地址的消息在到达broker之前, 先路由到的方法. 这部分代码是由应用控制的.
+生产者client: 发送send命令到某个目的地址(destination)的client.  
+消费者client: 订阅某个目的地址(destination), 并接收此目的地址所推送过来的消息的client.  
+request channel: 一组用来接收生产者client所推送过来的消息的线程池.  
+response channel: 一组用来推送消息给消费者client的线程池.  
+broker: 消息队列管理者. 简单讲就是记录哪些client订阅了哪个目的地址(destination).  
+应用目的地址(图中的”/app”): 发送到这类目的地址的消息在到达broker之前, 会先路由到由应用写的某个方法. 相当于对进入broker的消息进行一次拦截, 目的是针对消息做一些业务处理.  
+非应用目的地址(图中的”/topic”): 发送到这类目的地址的消息会直接转到broker. 不会被应用拦截.  
+SimAnnotatonMethod: 发送到应用目的地址的消息在到达broker之前, 先路由到的方法. 这部分代码是由应用控制的.  
 
-一个消息从生产者发出到消费者消费, 流程如下:
+一个消息从生产者发出到消费者消费, 流程如下:  
 
-生产者通过发送一条SEND命令消息到某个目的地址(destination)
-服务端request channel接受到这条SEND命令消息
-如果目的地址是应用目的地址则转到相应的由应用自己写的业务方法做处理, 再转到broker.
-如果目的地址是非应用目的地址则直接转到broker.
-broker通过SEND命令消息来构建MESSAGE命令消息, 再通过response channel推送MESSAGE命令消息到所有订阅此目的地址的消费者.
+生产者通过发送一条SEND命令消息到某个目的地址(destination)  
+服务端request channel接受到这条SEND命令消息  
+如果目的地址是应用目的地址则转到相应的由应用自己写的业务方法做处理, 再转到broker.  
+如果目的地址是非应用目的地址则直接转到broker.  
+broker通过SEND命令消息来构建MESSAGE命令消息, 再通过response channel推送MESSAGE命令消息到所有订阅此目的地址的消费者.  
 
 
 
