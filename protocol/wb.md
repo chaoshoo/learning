@@ -40,7 +40,7 @@ long poll 需要有很高的并发，也就是说同时接待客户的能力。�
 HTML5开始提供的一种浏览器与服务器进行全双工通讯的网络技术，属于应用层协议。它基于TCP传输协议，并复用HTTP的握手通道，它实现了浏览器与服务器全双工(full-duplex)通信——允许服务器主动发送信息给客户端。 
 在webscoket协议中, client利用http来建立tcp连接, 建立tcp连接之后, client与server就可以基于tcp连接来愉快的进行通信了.
 复习下http
-![wb](./image/http.png.png)
+![wb](./image/http.png)
 ![wb](./image/httpp.png)
 
 
