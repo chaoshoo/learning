@@ -40,9 +40,8 @@ long poll 需要有很高的并发，也就是说同时接待客户的能力。�
 HTML5开始提供的一种浏览器与服务器进行全双工通讯的网络技术，属于应用层协议。它基于TCP传输协议，并复用HTTP的握手通道，它实现了浏览器与服务器全双工(full-duplex)通信——允许服务器主动发送信息给客户端。 
 在webscoket协议中, client利用http来建立tcp连接, 建立tcp连接之后, client与server就可以基于tcp连接来愉快的进行通信了.
 复习下http
-![enter description here][1]
-![enter description here][2]
-![enter description here][3]
+![wb](./image/http.png.png)
+![wb](./image/httpp.png)
 
 
 **WebSocket的握手过程**
@@ -77,7 +76,7 @@ Sec-WebSocket-Key：与后面服务端响应首部的Sec-WebSocket-Accept是配�
 服务端：ok，有的时候会告诉你的。
 服务端：balabalabalabala服务端：balabalabalabala
 服务端：哈哈哈哈哈啊哈哈哈哈
-![enter description here][4]
+![wb](./image/comm.png)
 相比HTTP（ keep-alive ， comet）长连接，WebSocket有以下特点：是真正的全双工方式，建立连接后客户端与服务器端是完全平等的，可以互相主动请求。而HTTP长连接基于HTTP，是传统的客户端对服务器发起请求的模式。HTTP长连接中，每次数据交换除了真正的数据部分外，服务器和客户端还要大量交换HTTP header，信息交换效率很低。Websocket协议通过第一个request建立了TCP连接之后，之后交换的数据都不需要发送 HTTP header就能交换数据，这显然和原有的HTTP协议有区别所以它需要对服务器和客户端都进行升级才能实现
 提个问题：
 scoket ，webscoket区别？
@@ -138,7 +137,7 @@ NACK
 DISCONNECT
 
 **spring实现stomp**
-![enter description here][5]
+![wb](./image/spring.png)
 上面的图是spring websocket的架构图. 
 其中由以下几个角色:
 
