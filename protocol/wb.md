@@ -131,16 +131,16 @@ content-length:20
 
 STOMP协议与HTTP协议很相似，它基于TCP协议，使用了以下命令：
 
-CONNECT（建立连接）
-SEND（发送消息）
-SUBSCRIBE（订阅消息）
-UNSUBSCRIBE（取消订阅）
-BEGIN
-COMMIT
-ABORT
-ACK
-NACK
-DISCONNECT
+CONNECT（建立连接）  
+SEND（发送消息）  
+SUBSCRIBE（订阅消息）  
+UNSUBSCRIBE（取消订阅）  
+BEGIN  
+COMMIT  
+ABORT  
+ACK  
+NACK  
+DISCONNECT  
 
 **spring实现stomp**
 ![wb](./image/spring.png)
