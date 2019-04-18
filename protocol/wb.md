@@ -94,26 +94,26 @@ websocket的payload可以是文本也可以是二进制.
 应用一般会选择用文本. 
 这个文本是什么格式websocket协议本身并没有规定, 由应用自己来定.
 
-比如我要请求发送消息这个接口, 那么我的payload可以写成:
+比如我要请求发送消息这个接口, 那么我的payload可以写成:  
 
-/send | params=我是消息
+/send | params=我是消息  
 1
-这里我自己定义了一个格式, 中坚线之前的是要调用的地址, 中竖线之后是参数. 
-由于格式是自己定义的, 所以在服务端我也需要自己写代码来解析这个格式. 
-把/send路由到相应的处理方法.
+这里我自己定义了一个格式, 中坚线之前的是要调用的地址, 中竖线之后是参数.   
+由于格式是自己定义的, 所以在服务端我也需要自己写代码来解析这个格式.   
+把/send路由到相应的处理方法.  
 
-那有没有一种统一的协议呢? 统一的标准呢? 
-因为这样就会有相应的已经实现的库来解析路由, 而不用自己去写, 自己去定义格式.
+那有没有一种统一的协议呢? 统一的标准呢?   
+因为这样就会有相应的已经实现的库来解析路由, 而不用自己去写, 自己去定义格式.  
 
 **stomp协议**
-stomp是一个用于client之间进行异步消息传输的简单文本协议, 全称是Simple Text Oriented Messaging Protocol.
-STOMP其实跟WebSocket没啥必然关系，它是一种mq协议，最初是设计出来给各种脚本语言用的，跟它对等的应该是AMQP、MQTT等协议。
-但STOMP协议更简洁，只有publish-subscribe模式
- 就像HTTP在TCP套接字之上添加了请求-响应模型层一样，STOMP在WebSocket之上提供了一个基于帧的线路格式（frame-based wire format）层，用来定义消息的语义。
+stomp是一个用于client之间进行异步消息传输的简单文本协议, 全称是Simple Text Oriented Messaging Protocol.  
+STOMP其实跟WebSocket没啥必然关系，它是一种mq协议，最初是设计出来给各种脚本语言用的，跟它对等的应该是AMQP、MQTT等协议。  
+但STOMP协议更简洁，只有publish-subscribe模式  
+ 就像HTTP在TCP套接字之上添加了请求-响应模型层一样，STOMP在WebSocket之上提供了一个基于帧的线路格式（frame-based wire format）层，用来定义消息的语义。  
 
-stomp协议中的client分为两角色:
-生产者: 通过SEND命令给某个目的地址(destination)发送消息.
-消费者: 通过SUBSCRIBE命令订阅某个目的地址(destination), 当生产者发送消息到目的地址后, 订阅此目的地址的消费者会即时收到消息.
+stomp协议中的client分为两角色:  
+生产者: 通过SEND命令给某个目的地址(destination)发送消息.  
+消费者: 通过SUBSCRIBE命令订阅某个目的地址(destination), 当生产者发送消息到目的地址后, 订阅此目的地址的消费者会即时收到消息.  
 
 STOMP的客户端和服务器之间的通信是通过“帧”（Frame）实现的，每个帧由多“行”（Line）组成。
 第一行包含了命令，然后紧跟键值对形式的Header内容。
