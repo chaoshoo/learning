@@ -50,45 +50,45 @@ HTML5开始提供的一种浏览器与服务器进行全双工通讯的网络技
 **WebSocket的握手过程**
 WebSocket虽然是独立于HTTP的另一种协议，但建立连接时却需要借助HTTP协议进行握手，这也是WebSocket的一个特色，利用了HTTP协议中一个特殊的header：Upgrade。在双方握手成功后，就跟HTTP没什么关系了，会直接在底层的TCP Socket基础上进行通信。
 
-1GET ws://localhost:8080/handlerA HTTP/1.1
-2Host: localhost:8080
-3Connection: Upgrade
-4Pragma: no-cache
-5Cache-Control: no-cache
-6Upgrade: websocket
-7Origin: http://localhost:8080
-8Sec-WebSocket-Version: 13
-9Sec-WebSocket-Key: IbMym0RGM6WulBh40amXHw==
-10Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits
+1GET ws://localhost:8080/handlerA HTTP/1.1  
+2Host: localhost:8080  
+3Connection: Upgrade  
+4Pragma: no-cache  
+5Cache-Control: no-cache  
+6Upgrade: websocket  
+7Origin: http://localhost:8080  
+8Sec-WebSocket-Version: 13  
+9Sec-WebSocket-Key: IbMym0RGM6WulBh40amXHw==  
+10Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits  
 
-Connection: Upgrade：表示要升级协议
-Upgrade: websocket：表示要升级到websocket协议。
-Sec-WebSocket-Version: 13：表示websocket的版本。如果服务端不支持该版本，需要返回一个Sec-WebSocket-Versionheader，里面包含服务端支持的版本号。
-Sec-WebSocket-Key：与后面服务端响应首部的Sec-WebSocket-Accept是配套的，提供基本的防护，比如恶意的连接，或者无意的连接。是一个base64编码的字符串
-如果握手成功，返回HTTP 101响应：
-1HTTP/1.1 101 Switching Protocols
-2Server: Apache-Coyote/1.1
-3Upgrade: websocket
-4Connection: upgrade
-5Sec-WebSocket-Accept: FcSPcCOgjs4tIy0aH9in+QmWXcg=
-6Sec-WebSocket-Extensions: permessage-deflate;client_max_window_bits=15
-7Date: Tue, 21 Mar 2019 06:17:04 GMT
-注意其中的Sec-WebSocket-Accept字段，就是服务端根据Sec-WebSocket-Key计算后的值。客户端必须校验这个值，校验通过才能建立连接。
+Connection: Upgrade：表示要升级协议  
+Upgrade: websocket：表示要升级到websocket协议。  
+Sec-WebSocket-Version: 13：表示websocket的版本。如果服务端不支持该版本，需要返回一个Sec-WebSocket-Versionheader，里面包含服务端支持的版本号。  
+Sec-WebSocket-Key：与后面服务端响应首部的Sec-WebSocket-Accept是配套的，提供基本的防护，比如恶意的连接，或者无意的连接。是一个base64编码的字符串  
+如果握手成功，返回HTTP 101响应：  
+1HTTP/1.1 101 Switching Protocols  
+2Server: Apache-Coyote/1.1  
+3Upgrade: websocket  
+4Connection: upgrade  
+5Sec-WebSocket-Accept: FcSPcCOgjs4tIy0aH9in+QmWXcg=  
+6Sec-WebSocket-Extensions: permessage-deflate;client_max_window_bits=15  
+7Date: Tue, 21 Mar 2019 06:17:04 GMT  
+注意其中的Sec-WebSocket-Accept字段，就是服务端根据Sec-WebSocket-Key计算后的值。客户端必须校验这个值，校验通过才能建立连接。  
 
-场景再现
-服务端：ok，确认，已升级为Websocket协议
-客户端：麻烦你有信息的时候推送给我噢。。
-服务端：ok，有的时候会告诉你的。
-服务端：balabalabalabala服务端：balabalabalabala
-服务端：哈哈哈哈哈啊哈哈哈哈
-![wb](./image/comm.png)
-相比HTTP（ keep-alive ， comet）长连接，WebSocket有以下特点：是真正的全双工方式，建立连接后客户端与服务器端是完全平等的，可以互相主动请求。而HTTP长连接基于HTTP，是传统的客户端对服务器发起请求的模式。HTTP长连接中，每次数据交换除了真正的数据部分外，服务器和客户端还要大量交换HTTP header，信息交换效率很低。Websocket协议通过第一个request建立了TCP连接之后，之后交换的数据都不需要发送 HTTP header就能交换数据，这显然和原有的HTTP协议有区别所以它需要对服务器和客户端都进行升级才能实现
-提个问题：
-scoket ，webscoket区别？
+场景再现  
+服务端：ok，确认，已升级为Websocket协议  
+客户端：麻烦你有信息的时候推送给我噢。。  
+服务端：ok，有的时候会告诉你的。  
+服务端：balabalabalabala服务端：balabalabalabala  
+服务端：哈哈哈哈哈啊哈哈哈哈  
+![wb](./image/comm.png)  
+相比HTTP（ keep-alive ， comet）长连接，WebSocket有以下特点：是真正的全双工方式，建立连接后客户端与服务器端是完全平等的，可以互相主动请求。而HTTP长连接基于HTTP，是传统的客户端对服务器发起请求的模式。HTTP长连接中，每次数据交换除了真正的数据部分外，服务器和客户端还要大量交换HTTP header，信息交换效率很低。Websocket协议通过第一个request建立了TCP连接之后，之后交换的数据都不需要发送 HTTP header就能交换数据，这显然和原有的HTTP协议有区别所以它需要对服务器和客户端都进行升级才能实现  
+提个问题：  
+scoket ，webscoket区别？  
 
 
-**发送数据**
-websocket连接已经建立, 由于websocket没有规范payload的格式, 所以应用需要自己去定义payload的格式.
+**发送数据**  
+websocket连接已经建立, 由于websocket没有规范payload的格式, 所以应用需要自己去定义payload的格式.  
 
 websocket的payload可以是文本也可以是二进制. 
 应用一般会选择用文本. 
