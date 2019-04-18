@@ -39,6 +39,7 @@ long poll 需要有很高的并发，也就是说同时接待客户的能力。�
 **什么是WebSocket**
 HTML5开始提供的一种浏览器与服务器进行全双工通讯的网络技术，属于应用层协议。它基于TCP传输协议，并复用HTTP的握手通道，它实现了浏览器与服务器全双工(full-duplex)通信——允许服务器主动发送信息给客户端。 
 在webscoket协议中, client利用http来建立tcp连接, 建立tcp连接之后, client与server就可以基于tcp连接来愉快的进行通信了.
+
 复习下http
 ![wb](./image/http.png)
 ![wb](./image/httpp.png)
@@ -46,6 +47,7 @@ HTML5开始提供的一种浏览器与服务器进行全双工通讯的网络技
 
 **WebSocket的握手过程**
 WebSocket虽然是独立于HTTP的另一种协议，但建立连接时却需要借助HTTP协议进行握手，这也是WebSocket的一个特色，利用了HTTP协议中一个特殊的header：Upgrade。在双方握手成功后，就跟HTTP没什么关系了，会直接在底层的TCP Socket基础上进行通信。
+
 1GET ws://localhost:8080/handlerA HTTP/1.1
 2Host: localhost:8080
 3Connection: Upgrade
@@ -70,6 +72,7 @@ Sec-WebSocket-Key：与后面服务端响应首部的Sec-WebSocket-Accept是配�
 6Sec-WebSocket-Extensions: permessage-deflate;client_max_window_bits=15
 7Date: Tue, 21 Mar 2019 06:17:04 GMT
 注意其中的Sec-WebSocket-Accept字段，就是服务端根据Sec-WebSocket-Key计算后的值。客户端必须校验这个值，校验通过才能建立连接。
+
 场景再现
 服务端：ok，确认，已升级为Websocket协议
 客户端：麻烦你有信息的时候推送给我噢。。
