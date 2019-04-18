@@ -51,6 +51,7 @@ HTML5开始提供的一种浏览器与服务器进行全双工通讯的网络技
 WebSocket虽然是独立于HTTP的另一种协议，但建立连接时却需要借助HTTP协议进行握手，这也是WebSocket的一个特色，利用了HTTP协议中一个特殊的header：Upgrade。在双方握手成功后，就跟HTTP没什么关系了，会直接在底层的TCP Socket基础上进行通信。
 
 1GET ws://localhost:8080/handlerA HTTP/1.1
+
 2Host: localhost:8080
 3Connection: Upgrade
 4Pragma: no-cache
