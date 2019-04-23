@@ -57,7 +57,7 @@ Heap
   class space    used 282K, capacity 386K, committed 512K, reserved 1048576K
 ```
 
-**[PSYoungGen: 4649K->872K(75776K)] **表示新生代回收了这两个对象，即使它们由于互相引用而导致计数器不为0。
+**[PSYoungGen: 4649K->872K(75776K)]** 表示新生代回收了这两个对象，即使它们由于互相引用而导致计数器不为0。
 
 ## 可达性分析
 
@@ -114,7 +114,7 @@ Heap
   class space    used 282K, capacity 386K, committed 512K, reserved 1048576K
 ```
 
-**[PSYoungGen: 4649K->2904K(75776K)] **表示新生代没有回收了这两个对象，即使有一个已经设为null。
+**[PSYoungGen: 4649K->2904K(75776K)]** 表示新生代没有回收了这两个对象，即使有一个已经设为null。
 
 ## 四种引用
 
